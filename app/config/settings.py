@@ -36,4 +36,3 @@ def get_config(env_state: str):
 
 
 config = get_config(BaseConfig().ENV_STATE)
-
