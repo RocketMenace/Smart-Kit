@@ -1,6 +1,8 @@
 from typing import TypeVar
 
+from fastapi import HTTPException, status
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config.database import database
@@ -16,10 +18,15 @@ class BaseRepository:
 
     async def add_one(self, entity: T) -> T:
         async with self.session as session:
-            session.add(entity)
-            await session.commit()
-            await session.refresh()
-            return entity
+            try:
+                session.add(entity)
+                await session.commit()
+                await session.refresh()
+                return entity
+            except IntegrityError as error:
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT, detail=str(error)
+                )
 
     async def get_all(self) -> list[T]:
         async with self.session as session:

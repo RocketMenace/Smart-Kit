@@ -12,4 +12,5 @@ class Query(QueryBase):
 
 
 class QueryResponse(QueryBase):
+    id: int
     response: bool

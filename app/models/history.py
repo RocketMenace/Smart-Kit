@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, Float, Integer, text
+from sqlalchemy import Boolean, DateTime, Float, Integer, String, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.config.database import database
@@ -11,6 +11,7 @@ class RequestHistory(database.Base):
     id: Mapped[int] = mapped_column(
         Integer, primary_key=True, index=True, autoincrement=True, nullable=False
     )
+    cadastral_number: Mapped[str] = mapped_column(String(255), unique=True)
     latitude: Mapped[float] = mapped_column(Float, nullable=False)
     longtitude: Mapped[float] = mapped_column(Float, nullable=False)
     response: Mapped[bool] = mapped_column(Boolean, nullable=False)
