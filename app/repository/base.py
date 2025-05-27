@@ -1,0 +1,28 @@
+from typing import Any, TypeVar
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.config.database import database
+
+DBModel = TypeVar("DBModel", bound=database.Base)
+T = TypeVar("T")
+
+
+class BaseRepository:
+    def __init__(self, session: AsyncSession, model: DBModel):
+        self.session = session
+        self.model = model
+
+    async def add_one(self, entity: T) -> T:
+        async with self.session as session:
+            session.add(entity)
+            await session.commit()
+            await session.refresh()
+            return entity
+
+    async def get_all(self) -> list[T]:
+        async with self.session as session:
+            stmt = select(self.model)
+            result = await session.execute(stmt)
+            return result.scalars().all()
