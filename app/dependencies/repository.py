@@ -1,11 +1,12 @@
 from typing import Annotated
+
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config.database import database
+from app.models.history import RequestHistory
 from app.repository.base import BaseRepositoryProtocol
 from app.repository.history import HistoryRepository
-from app.models.history import RequestHistory
 
 
 async def get_history_repository(

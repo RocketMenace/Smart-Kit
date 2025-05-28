@@ -1,7 +1,8 @@
 from typing import Self
+
+from app.schemas.history import RequestInputSchema, RequestOutputSchema
 from app.services.base import BaseServiceProtocol
 from app.services.request import RequestServiceProtocol
-from app.schemas.history import RequestInputSchema, RequestOutputSchema
 
 
 class SaveResponseUseCase:

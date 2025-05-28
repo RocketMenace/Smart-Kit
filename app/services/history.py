@@ -1,6 +1,7 @@
-from app.services.base import BaseService
 from typing import Self
+
 from app.repository.base import BaseRepositoryProtocol
+from app.services.base import BaseService
 
 
 class HistoryService(BaseService):

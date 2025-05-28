@@ -1,4 +1,4 @@
-from typing import TypeVar, Self, Protocol, Sequence
+from typing import Protocol, Self, Sequence, TypeVar
 
 from fastapi import HTTPException, status
 from sqlalchemy import select

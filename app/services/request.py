@@ -1,4 +1,5 @@
-from typing import Self, Protocol
+from typing import Protocol, Self
+
 from app.schemas.history import RequestInputSchema
 
 

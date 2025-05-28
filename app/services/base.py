@@ -1,4 +1,5 @@
-from typing import Self, Protocol, Any
+from typing import Any, Protocol, Self
+
 from app.repository.base import BaseRepositoryProtocol
 
 
