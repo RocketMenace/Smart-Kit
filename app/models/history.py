@@ -13,7 +13,7 @@ class RequestHistory(database.Base):
     )
     cadastral_number: Mapped[str] = mapped_column(String(255), unique=True)
     latitude: Mapped[float] = mapped_column(Float, nullable=False)
-    longtitude: Mapped[float] = mapped_column(Float, nullable=False)
+    longitude: Mapped[float] = mapped_column(Float, nullable=False)
     response: Mapped[bool] = mapped_column(Boolean, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=text("TIMEZONE('utc', now())")
