@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class QueryBase(BaseModel):
-    cadastral_number: int
+    cadastral_number: str
     latitude: float
     longtitude: float
 

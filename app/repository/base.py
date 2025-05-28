@@ -1,4 +1,4 @@
-from typing import TypeVar
+from typing import TypeVar, Self, Protocol
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
@@ -11,12 +11,21 @@ DBModel = TypeVar("DBModel", bound=database.Base)
 T = TypeVar("T")
 
 
-class BaseRepository:
+class BaseRepositoryProtocol(Protocol):
+
+    async def add_one(self: Self, entity: T) -> T:
+        ...
+
+    async def get_all(self: Self) -> list[T]:
+        ...
+
+
+class BaseRepository(BaseRepositoryProtocol):
     def __init__(self, session: AsyncSession, model: DBModel):
         self.session = session
         self.model = model
 
-    async def add_one(self, entity: T) -> T:
+    async def add_one(self: Self, entity: T) -> T:
         async with self.session as session:
             try:
                 session.add(entity)
@@ -28,7 +37,7 @@ class BaseRepository:
                     status_code=status.HTTP_409_CONFLICT, detail=str(error)
                 )
 
-    async def get_all(self) -> list[T]:
+    async def get_all(self: Self) -> list[T]:
         async with self.session as session:
             stmt = select(self.model)
             result = await session.execute(stmt)
