@@ -18,7 +18,7 @@ class SaveResponseUseCase:
         dto = RequestOutputSchema(
             cadastral_number=request.cadastral_number,
             latitude=request.latitude,
-            longtitude=request.longtitude,
+            longitude=request.longitude,
             response=response,
         )
-        return await self.history_service.create()
+        return await self.history_service.create(schema=dto)

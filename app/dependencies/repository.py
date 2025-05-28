@@ -9,6 +9,7 @@ from app.models.history import RequestHistory
 
 
 async def get_history_repository(
-    session: Annotated[AsyncSession, Depends(database.get_session)], model: RequestHistory,
+    session: Annotated[AsyncSession, Depends(database.get_session)],
+    model: RequestHistory,
 ) -> BaseRepositoryProtocol:
     return HistoryRepository(session=session, model=model)

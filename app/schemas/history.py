@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 class RequestBaseSchema(BaseModel):
     cadastral_number: str
     latitude: float
-    longtitude: float
+    longitude: float
 
 
 class RequestInputSchema(RequestBaseSchema):

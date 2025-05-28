@@ -1,11 +1,11 @@
 from typing import Self, Protocol
-from app.schemas.history import RequestSchema
+from app.schemas.history import RequestInputSchema
 
 
 class RequestServiceProtocol(Protocol):
-    async def get_response(self: Self, request: RequestSchema) -> bool: ...
+    async def get_response(self: Self, request: RequestInputSchema) -> bool: ...
 
 
 class RequestService(RequestServiceProtocol):
-    async def get_response(self: Self, request: RequestSchema) -> bool:
+    async def get_response(self: Self, request: RequestInputSchema) -> bool:
         pass

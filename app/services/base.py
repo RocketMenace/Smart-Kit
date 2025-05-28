@@ -3,7 +3,7 @@ from app.repository.base import BaseRepositoryProtocol
 
 
 class BaseServiceProtocol(Protocol):
-    async def create(self: Self): ...
+    async def create(self: Self, schema: Any): ...
 
     async def get_all(self: Self): ...
 
@@ -15,5 +15,5 @@ class BaseService(BaseServiceProtocol):
     async def create(self: Self, schema: Any) -> Any:
         return self.repository.add_one(schema)
 
-    async def get_all(self: Self, id: int):
+    async def get_all(self: Self):
         return self.repository.get_all()
