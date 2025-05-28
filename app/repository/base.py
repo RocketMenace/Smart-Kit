@@ -12,12 +12,9 @@ T = TypeVar("T")
 
 
 class BaseRepositoryProtocol(Protocol):
+    async def add_one(self: Self, entity: T) -> T: ...
 
-    async def add_one(self: Self, entity: T) -> T:
-        ...
-
-    async def get_all(self: Self) -> list[T]:
-        ...
+    async def get_all(self: Self) -> list[T]: ...
 
 
 class BaseRepository(BaseRepositoryProtocol):
