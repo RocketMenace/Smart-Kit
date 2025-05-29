@@ -8,5 +8,9 @@ class RequestServiceProtocol(Protocol):
 
 
 class RequestService(RequestServiceProtocol):
+
+    def __init__(self):
+        pass
+
     async def get_response(self: Self, request: RequestInputSchema) -> bool:
         pass
