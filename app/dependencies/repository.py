@@ -10,11 +10,12 @@ from app.repository.user import UserRepository
 
 
 async def get_user_repository(
-        session: Annotated[AsyncSession, Depends(database.get_session)]
+    session: Annotated[AsyncSession, Depends(database.get_session)],
 ) -> BaseRepositoryProtocol:
     return UserRepository(session=session)
 
+
 async def get_history_repository(
-    session: Annotated[AsyncSession, Depends(database.get_session)]
+    session: Annotated[AsyncSession, Depends(database.get_session)],
 ) -> BaseRepositoryProtocol:
     return HistoryRepository(session=session)
