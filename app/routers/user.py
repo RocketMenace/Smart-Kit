@@ -16,4 +16,4 @@ async def register(
     request: UserCreateSchema,
     use_case: Annotated[UserRegisterUseCase, Depends(get_user_register_use_case)],
 ):
-    return await use_case.user_service.create(schema=request)
+    return await use_case.register(schema=request)

@@ -3,7 +3,7 @@ from app.schemas.history import RequestInputSchema
 from app.dependencies.use_cases import get_process_request_use_case
 from app.use_cases.process_request import ProcessRequestUseCase
 from typing import Annotated
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 
 router = APIRouter(prefix="/third-party-server", tags=["Response server"])
 
@@ -13,11 +13,11 @@ async def get_response(
     request: RequestInputSchema,
     use_case: Annotated[ProcessRequestUseCase, Depends(get_process_request_use_case)],
 ):
-    return await use_case.third_party_service.process_request()
+    return await use_case.process_request(schema=request)
 
 
-@router.get("/ping", status_code=status.HTTP_200_OK)
+@router.get("/ping", status_code=status.HTTP_200_OK, response_class=PlainTextResponse)
 async def ping_server(
     use_case: Annotated[ProcessRequestUseCase : Depends(get_process_request_use_case)],
 ):
-    return await use_case.third_party_service.ping()
+    return await use_case.ping()
