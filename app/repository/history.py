@@ -6,9 +6,9 @@ from app.repository.base import BaseRepository
 
 
 class HistoryRepository(BaseRepository):
-    def __init__(self, session: AsyncSession, model: RequestHistory):
+    def __init__(self, session: AsyncSession):
         self.session = session
-        super().__init__(session, model)
+        super().__init__(session, model=RequestHistory)
 
     async def get_by_cadastral_number(self, cadastral_number: str) -> RequestHistory:
         async with self.session as session:
