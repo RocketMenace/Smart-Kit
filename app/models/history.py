@@ -9,7 +9,7 @@ from app.config.database import database
 class RequestHistory(database.Base):
     __tablename__ = "request_history"
     id: Mapped[int] = mapped_column(
-        Integer, primary_key=True, index=True, autoincrement=True, nullable=False
+        Integer, primary_key=True, autoincrement=True, nullable=False
     )
     cadastral_number: Mapped[str] = mapped_column(String(255), unique=True)
     latitude: Mapped[float] = mapped_column(Float, nullable=False)
