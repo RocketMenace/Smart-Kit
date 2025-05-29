@@ -15,9 +15,10 @@ from app.use_cases.process_request import ProcessRequestUseCase
 
 
 async def get_user_register_use_case(
-        user_service: Annotated[UserService, Depends(get_user_service)]
+    user_service: Annotated[UserService, Depends(get_user_service)],
 ) -> UserRegisterUseCase:
     return UserRegisterUseCase(user_service=user_service)
+
 
 async def get_save_response_use_case(
     history_service: Annotated[HistoryService, Depends(get_history_service)],
@@ -27,7 +28,8 @@ async def get_save_response_use_case(
         history_service=history_service, request_service=request_service
     )
 
+
 async def get_process_request_use_case(
-        third_party_service: Annotated[ThirdPartyService, Depends(get_third_party_service)]
+    third_party_service: Annotated[ThirdPartyService, Depends(get_third_party_service)],
 ) -> ProcessRequestUseCase:
     return ProcessRequestUseCase(third_party_service=third_party_service)
