@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class RequestBaseSchema(BaseModel):
@@ -18,3 +18,4 @@ class RequestOutputSchema(RequestBaseSchema):
 class HistoryResponseSchema(RequestBaseSchema):
     id: int
     response: bool
+    model_config = ConfigDict(from_attributes=True)
