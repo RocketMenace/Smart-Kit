@@ -6,6 +6,9 @@ class ThirdPartyService:
     def __init__(self: Self):
         pass
 
-    def process_request(self: Self):
-        response_body = bool(randint(0,1))
+    async def process_request(self: Self):
+        response_body = bool(randint(0, 1))
         return {"response": response_body}
+
+    async def ping(self: Self):
+        return "Server is ready"
