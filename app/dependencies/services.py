@@ -9,6 +9,7 @@ from app.services.history import HistoryService
 from app.services.request import RequestService, RequestServiceProtocol
 from app.repository.user import UserRepository
 from app.services.user import UserService
+from app.services.third_party import ThirdPartyService
 
 
 async def get_user_service(repository: Annotated[UserRepository, Depends(get_user_repository)]) -> BaseServiceProtocol:
@@ -21,4 +22,7 @@ async def get_history_service(
 
 
 async def get_request_service() -> RequestServiceProtocol:
-    return RequestService
+    return RequestService()
+
+async def get_third_party_service():
+    return ThirdPartyService()
