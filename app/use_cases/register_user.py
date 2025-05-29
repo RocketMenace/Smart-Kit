@@ -5,9 +5,9 @@ from app.schemas.user import UserCreateSchema
 
 class UserRegisterUseCase:
 
-    def __init__(self: Self, service: BaseServiceProtocol):
+    def __init__(self: Self, user_service: BaseServiceProtocol):
 
-        self.service = service
+        self.user_service = user_service
 
     async def register(self: Self, schema: UserCreateSchema):
         return await self.service.create(schema=schema)
