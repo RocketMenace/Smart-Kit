@@ -5,7 +5,7 @@ from app.schemas.history import RequestInputSchema
 
 
 class RequestServiceProtocol(Protocol):
-    async def send_data(self: Self, request: RequestInputSchema) -> dict[str, Any]: ...
+    async def send_data(self: Self, schema: RequestInputSchema) -> dict[str, Any]: ...
 
 
 class RequestService(RequestServiceProtocol):
@@ -14,7 +14,5 @@ class RequestService(RequestServiceProtocol):
 
     async def send_data(self: Self, schema: RequestInputSchema) -> dict[str, Any]:
         async with self.http_client as client:
-            response = await self.http_client.post(
-                endpoint="/result", json=schema.model_dump()
-            )
+            response = await client(endpoint="/result", json=schema.model_dump())
             return response.json()
