@@ -8,7 +8,6 @@ class RequestServiceProtocol(Protocol):
 
 
 class RequestService(RequestServiceProtocol):
-
     def __init__(self):
         pass
 

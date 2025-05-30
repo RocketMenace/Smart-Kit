@@ -12,6 +12,7 @@ from app.dependencies.services import get_user_service
 from app.dependencies.services import get_third_party_service
 from app.services.third_party import ThirdPartyService
 from app.use_cases.process_request import ProcessRequestUseCase
+from app.use_cases.get_history import GetHistoryUseCase
 
 
 async def get_user_register_use_case(
@@ -33,3 +34,9 @@ async def get_process_request_use_case(
     third_party_service: Annotated[ThirdPartyService, Depends(get_third_party_service)],
 ) -> ProcessRequestUseCase:
     return ProcessRequestUseCase(third_party_service=third_party_service)
+
+
+async def get_history_use_case(
+    history_service: Annotated[HistoryService, Depends(get_history_service)],
+) -> GetHistoryUseCase:
+    return GetHistoryUseCase(history_service=history_service)
