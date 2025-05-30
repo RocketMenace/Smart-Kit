@@ -7,5 +7,6 @@ class ThirdPartyService:
         pass
 
     async def process_request(self: Self):
+        print("********************8")
         response_body = bool(randint(0, 1))
         return {"response": response_body}

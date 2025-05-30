@@ -18,6 +18,6 @@ async def get_response(
 
 @router.get("/ping", status_code=status.HTTP_200_OK, response_class=PlainTextResponse)
 async def ping_server(
-    use_case: Annotated[ProcessRequestUseCase : Depends(get_process_request_use_case)],
+    use_case: Annotated[ProcessRequestUseCase, Depends(get_process_request_use_case)],
 ):
     return await use_case.ping()

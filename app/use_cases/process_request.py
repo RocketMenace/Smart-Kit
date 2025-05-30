@@ -8,7 +8,7 @@ class ProcessRequestUseCase:
         self.third_party_service = third_party_service
 
     async def process_request(self: Self, schema: RequestInputSchema):
-        return self.third_party_service.process_request()
+        return await self.third_party_service.process_request()
 
     async def ping(self: Self):
         return "Server is ready"
