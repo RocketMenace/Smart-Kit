@@ -30,9 +30,9 @@ async def get_history_service(
 
 
 async def get_request_service(
-    http_clienT: Annotated[AsyncHTTPClient, Depends(get_http_client)],
+    http_client: Annotated[AsyncHTTPClient, Depends(get_http_client)],
 ) -> RequestServiceProtocol:
-    return RequestService(http_client=http_clienT)
+    return RequestService(http_client=http_client)
 
 
 async def get_third_party_service():

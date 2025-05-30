@@ -2,6 +2,7 @@ import httpx
 from typing import Self
 
 from fastapi.exceptions import HTTPException
+from fastapi import status
 
 
 class AsyncHTTPClient:
@@ -17,9 +18,14 @@ class AsyncHTTPClient:
             response.raise_for_status()
             return response
         except httpx.HTTPStatusError as e:
-            raise HTTPException(detail=f"HTTP error: {e.response.status_code}")
+            raise HTTPException(
+                detail=f"HTTP error: {str(e)}", status_code=status.HTTP_400_BAD_REQUEST
+            )
         except httpx.RequestError as e:
-            raise HTTPException(detail=f"Connection failed: {str(e)}")
+            raise HTTPException(
+                detail=f"Connection failed: {str(e)}",
+                status_code=status.HTTP_400_BAD_REQUEST,
+            )
 
     async def close(self):
         await self.client.aclose()
