@@ -1,5 +1,6 @@
-from typing import Protocol, Self
+from typing import Protocol, Self, Any
 from httpx import AsyncClient
+from app.infrastructure.http_client import AsyncHTTPClient
 
 from app.schemas.history import RequestInputSchema
 
@@ -9,9 +10,12 @@ class RequestServiceProtocol(Protocol):
 
 
 class RequestService(RequestServiceProtocol):
-    def __init__(self: Self, http_client: AsyncClient):
+    def __init__(self: Self, http_client: AsyncHTTPClient):
         self.http_client = http_client
 
-    async def send_data(self: Self, request: RequestInputSchema) -> bool:
+    async def send_data(self: Self, schema: RequestInputSchema) -> dict[str, Any]:
         async with self.http_client as client:
-            return await self.http_client.post()
+            response = await self.http_client.post(
+                endpoint="/result", json=schema.model_dump()
+            )
+            return response.json()

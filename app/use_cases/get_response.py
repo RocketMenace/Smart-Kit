@@ -15,7 +15,7 @@ class SaveResponseUseCase:
         self.request_service = request_service
 
     async def get_response(self: Self, request: RequestInputSchema):
-        response = await self.request_service.get_response(request=request)
+        response = await self.request_service.send_data(request=request)
         dto = RequestOutputSchema(
             cadastral_number=request.cadastral_number,
             latitude=request.latitude,
