@@ -22,7 +22,7 @@ class BaseRepository(BaseRepositoryProtocol):
         self.session = session
         self.model = model
 
-    async def add_one(self: Self, schema: BaseModel) -> BaseModel:
+    async def add_one(self: Self, schema: BaseModel) -> DBModel:
         async with self.session as session:
             try:
                 entity = self.model(**schema.model_dump())

@@ -19,3 +19,6 @@ async def register(
     return await use_case.register(schema=request)
 
 
+@router.post(path="/login", status_code=status.HTTP_200_OK, response_model=...)
+async def login(request: ..., use_case: Annotated[..., Depends()]):
+    pass

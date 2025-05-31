@@ -8,4 +8,4 @@ class UserRegisterUseCase:
         self.user_service = user_service
 
     async def register(self: Self, schema: UserCreateSchema):
-        return await self.service.create(schema=schema)
+        return await self.user_service.create(schema=schema)
