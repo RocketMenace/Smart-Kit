@@ -12,6 +12,21 @@ class AsyncHTTPClient:
             limits=httpx.Limits(max_connections=50, max_keepalive_connections=20),
         )
 
+    async def get(self: Self, endpoint: str, **kwargs) -> httpx.Response:
+        try:
+            response = await self.client.get(endpoint, **kwargs)
+            response.raise_for_status()
+            return response
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(
+                detail=f"HTTP error: {str(e)}", status_code=status.HTTP_400_BAD_REQUEST
+            )
+        except httpx.RequestError as e:
+            raise HTTPException(
+                detail=f"Connection failed: {str(e)}",
+                status_code=status.HTTP_400_BAD_REQUEST,
+            )
+
     async def post(self: Self, endpoint: str, **kwargs) -> httpx.Response:
         try:
             response = await self.client.post(endpoint, **kwargs)

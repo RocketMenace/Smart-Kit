@@ -23,5 +23,3 @@ class SaveResponseUseCase:
             response=response.get("response"),
         )
         return await self.history_service.create(schema=dto)
-    
-    

@@ -5,7 +5,6 @@ from app.infrastructure.http_client import AsyncHTTPClient
 from app.routers import history, request, response, user
 
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     app.state.http_client = AsyncHTTPClient(base_url="http://localhost:8000/api")
