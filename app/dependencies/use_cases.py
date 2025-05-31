@@ -10,12 +10,19 @@ from app.use_cases.register_user import UserRegisterUseCase
 from app.services.user import UserService
 from app.dependencies.services import get_user_service
 from app.use_cases.get_history import GetHistoryUseCase
+from app.use_cases.check_server import CheckServerUseCase
 
 
 async def get_user_register_use_case(
     user_service: Annotated[UserService, Depends(get_user_service)],
 ) -> UserRegisterUseCase:
     return UserRegisterUseCase(user_service=user_service)
+
+
+async def get_check_server_use_case(
+    request_service: Annotated[RequestService, Depends(get_request_service)],
+) -> CheckServerUseCase:
+    return CheckServerUseCase(request_service=request_service)
 
 
 async def get_save_response_use_case(

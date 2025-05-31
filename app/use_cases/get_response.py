@@ -23,6 +23,3 @@ class SaveResponseUseCase:
             response=response.get("response"),
         )
         return await self.history_service.create(schema=dto)
-
-    async def ping_server(self: Self):
-        return await self.request_service.ping_third_party_server()

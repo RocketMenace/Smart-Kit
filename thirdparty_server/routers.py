@@ -6,8 +6,10 @@ from app.dependencies.use_cases import (
 from typing import Annotated
 from fastapi.responses import JSONResponse, PlainTextResponse
 from app.use_cases.get_response import SaveResponseUseCase
+from thirdparty_server.dependencies import get_process_request_use_case
+from thirdparty_server.use_cases import ProcessRequestUseCase
 
-router = APIRouter(prefix="/third-party-server", tags=["Response server"])
+router = APIRouter(tags=["Response server"])
 
 
 @router.post("/result", status_code=status.HTTP_200_OK, response_class=JSONResponse)

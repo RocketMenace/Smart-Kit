@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
 
 from app.infrastructure.http_client import AsyncHTTPClient
-from app.routers import history, request, response, user
+from app.routers import history, request, user
 
 
 @asynccontextmanager
@@ -16,5 +16,4 @@ app = FastAPI(root_path="/api", title="Smartkit", lifespan=lifespan)
 
 app.include_router(history.router)
 app.include_router(request.router)
-app.include_router(response.router)
 app.include_router(user.router)
