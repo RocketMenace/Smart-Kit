@@ -32,4 +32,3 @@ async def get_request_service(
     http_client: Annotated[AsyncHTTPClient, Depends(get_http_client)],
 ) -> RequestServiceProtocol:
     return RequestService(http_client=http_client)
-
