@@ -10,7 +10,6 @@ from app.services.history import HistoryService
 from app.services.request import RequestService, RequestServiceProtocol
 from app.repository.user import UserRepository
 from app.services.user import UserService
-from app.services.third_party import ThirdPartyService
 
 
 async def get_http_client() -> AsyncHTTPClient:
@@ -34,6 +33,3 @@ async def get_request_service(
 ) -> RequestServiceProtocol:
     return RequestService(http_client=http_client)
 
-
-async def get_third_party_service():
-    return ThirdPartyService()
