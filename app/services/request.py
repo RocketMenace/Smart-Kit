@@ -13,5 +13,6 @@ class RequestService(RequestServiceProtocol):
         self.http_client = http_client
 
     async def send_data(self: Self, schema: RequestInputSchema) -> dict[str, Any]:
+        print("******************")
         response = await self.http_client.post(endpoint="/third-party-server/result", json=schema.model_dump())
         return response.json()

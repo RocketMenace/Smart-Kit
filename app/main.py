@@ -1,22 +1,21 @@
-from typing import AsyncGenerator
-
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
+from fastapi.concurrency import asynccontextmanager
 
-from app.dependencies.services import get_http_client
-from app.routers import history, user, request, response
+from app.infrastructure.http_client import AsyncHTTPClient
+from app.routers import history, request, response, user
+
 
 
 @asynccontextmanager
-async def lifespan(application: FastAPI) -> AsyncGenerator:
-    http_client = await get_http_client()
+async def lifespan(app: FastAPI):
+    app.state.http_client = AsyncHTTPClient(base_url="http://localhost:8000/api")
     yield
-    await http_client.close()
+    await app.state.http_client.close()
 
 
-app = FastAPI(root_path="/api", title="SmartKit", lifespan=lifespan)
+app = FastAPI(root_path="/api", title="Smartkit", lifespan=lifespan)
 
-app.include_router(user.router)
 app.include_router(history.router)
 app.include_router(request.router)
 app.include_router(response.router)
+app.include_router(user.router)

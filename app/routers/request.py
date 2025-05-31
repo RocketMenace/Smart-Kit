@@ -18,4 +18,5 @@ async def register_cadastral_record(
     request: RequestInputSchema,
     use_case: Annotated[SaveResponseUseCase, Depends(get_save_response_use_case)],
 ):
+    print("&&&&&&&&&&&&&&&")
     return await use_case.get_response(request=request)

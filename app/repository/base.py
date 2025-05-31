@@ -4,6 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
+from pydantic import BaseModel
 
 from app.config.database import database
 
@@ -21,9 +22,10 @@ class BaseRepository(BaseRepositoryProtocol):
         self.session = session
         self.model = model
 
-    async def add_one(self: Self, entity: DBModel) -> DBModel:
+    async def add_one(self: Self, schema: BaseModel) -> BaseModel:
         async with self.session as session:
             try:
+                entity: DBModel = self.model(**schema.model_dump())
                 session.add(entity)
                 await session.commit()
                 await session.refresh(entity)
