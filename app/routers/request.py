@@ -1,11 +1,13 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, status
+from fastapi.responses import JSONResponse
 
 from app.dependencies.use_cases import get_save_response_use_case
 from app.schemas.history import HistoryResponseSchema, RequestInputSchema
 from app.use_cases.get_response import SaveResponseUseCase
 from app.use_cases.check_server import CheckServerUseCase
+from app.dependencies.use_cases import get_check_server_use_case
 
 router = APIRouter()
 
@@ -27,6 +29,6 @@ async def register_cadastral_record(
     status_code=status.HTTP_200_OK,
 )
 async def health_check_server(
-    use_case: Annotated[CheckServerUseCase, Depends(get_save_response_use_case)],
+    use_case: Annotated[CheckServerUseCase, Depends(get_check_server_use_case)],
 ):
     return await use_case.ping_server()

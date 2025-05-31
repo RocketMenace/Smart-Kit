@@ -17,3 +17,5 @@ async def register(
     use_case: Annotated[UserRegisterUseCase, Depends(get_user_register_use_case)],
 ):
     return await use_case.register(schema=request)
+
+

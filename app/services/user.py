@@ -10,4 +10,4 @@ class UserService(BaseService):
         super().__init__(repository=repository)
 
     async def create(self: Self, schema: UserCreateSchema):
-        pass
+        return await self.repository.add_one(schema=schema)

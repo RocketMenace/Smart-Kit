@@ -1,11 +1,9 @@
 from fastapi import APIRouter, status, Depends
+
 from app.schemas.history import RequestInputSchema
-from app.dependencies.use_cases import (
-    get_save_response_use_case,
-)
+
 from typing import Annotated
-from fastapi.responses import JSONResponse, PlainTextResponse
-from app.use_cases.get_response import SaveResponseUseCase
+from fastapi.responses import JSONResponse
 from thirdparty_server.dependencies import get_process_request_use_case
 from thirdparty_server.use_cases import ProcessRequestUseCase
 
@@ -20,8 +18,8 @@ async def get_response(
     return await use_case.process_request(schema=request)
 
 
-@router.get("/ping", status_code=status.HTTP_200_OK, response_class=PlainTextResponse)
+@router.get("/ping", status_code=status.HTTP_200_OK, response_class=JSONResponse)
 async def ping_server(
-    use_case: Annotated[SaveResponseUseCase, Depends(get_save_response_use_case)],
+    use_case: Annotated[ProcessRequestUseCase, Depends(get_process_request_use_case)],
 ):
-    return await use_case.ping_server()
+    return await use_case.ping()

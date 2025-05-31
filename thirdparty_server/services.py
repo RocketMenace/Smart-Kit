@@ -11,4 +11,4 @@ class ThirdPartyService:
         return {"response": response_body}
 
     async def ping(self: Self):
-        return "Server is ready"
+        return {"response": "Server is ready"}

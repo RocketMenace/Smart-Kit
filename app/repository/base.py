@@ -12,7 +12,7 @@ DBModel = TypeVar("DBModel", bound=database.Base)
 
 
 class BaseRepositoryProtocol(Protocol):
-    async def add_one(self: Self, entity: DBModel) -> DBModel: ...
+    async def add_one(self: Self, schema: BaseModel) -> DBModel: ...
 
     async def get_all(self: Self) -> Sequence[DBModel]: ...
 
@@ -25,7 +25,7 @@ class BaseRepository(BaseRepositoryProtocol):
     async def add_one(self: Self, schema: BaseModel) -> BaseModel:
         async with self.session as session:
             try:
-                entity: DBModel = self.model(**schema.model_dump())
+                entity = self.model(**schema.model_dump())
                 session.add(entity)
                 await session.commit()
                 await session.refresh(entity)
