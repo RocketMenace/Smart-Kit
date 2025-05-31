@@ -7,6 +7,7 @@ from app.dependencies.use_cases import (
 from app.use_cases.process_request import ProcessRequestUseCase
 from typing import Annotated
 from fastapi.responses import JSONResponse, PlainTextResponse
+from app.use_cases.get_response import SaveResponseUseCase
 
 router = APIRouter(prefix="/third-party-server", tags=["Response server"])
 
@@ -21,6 +22,6 @@ async def get_response(
 
 @router.get("/ping", status_code=status.HTTP_200_OK, response_class=PlainTextResponse)
 async def ping_server(
-    use_case: Annotated[ProcessRequestUseCase, Depends(get_save_response_use_case)],
+    use_case: Annotated[SaveResponseUseCase, Depends(get_save_response_use_case)],
 ):
-    return await use_case.ping()
+    return await use_case.ping_server()
