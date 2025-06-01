@@ -22,3 +22,9 @@ class AuthService:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST, detail=f"Wrong password"
             )
+
+    async def logout(self):
+        pass
+
+    async def refresh(self):
+        pass
