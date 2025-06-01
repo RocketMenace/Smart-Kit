@@ -42,5 +42,3 @@ class BaseRepository(BaseRepositoryProtocol):
             stmt = select(self.model)
             result = await session.execute(stmt)
             return result.scalars().all()
-
-
