@@ -14,7 +14,10 @@ from app.services.user import UserService
 
 from app.services.auth import AuthService
 
-async def get_auth_service(repository: Annotated[UserRepository, Depends(get_user_repository)]) -> AuthService:
+
+async def get_auth_service(
+    repository: Annotated[UserRepository, Depends(get_user_repository)],
+) -> AuthService:
     return AuthService(repository=repository)
 
 

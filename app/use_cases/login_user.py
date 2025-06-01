@@ -4,7 +4,6 @@ from app.auth.schemas import UserLoginSchema
 
 
 class LoginUserUseCase:
-
     def __init__(self: Self, auth_service: AuthService):
         self.auth_service = auth_service
 

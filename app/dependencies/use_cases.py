@@ -2,15 +2,27 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from app.dependencies.services import get_history_service, get_request_service
 from app.services.history import HistoryService
 from app.services.request import RequestService
 from app.use_cases.get_response import SaveResponseUseCase
 from app.use_cases.register_user import UserRegisterUseCase
 from app.services.user import UserService
-from app.dependencies.services import get_user_service
+from app.dependencies.services import (
+    get_user_service,
+    get_auth_service,
+    get_history_service,
+    get_request_service,
+)
 from app.use_cases.get_history import GetHistoryUseCase
 from app.use_cases.check_server import CheckServerUseCase
+from app.services.auth import AuthService
+from app.use_cases.login_user import LoginUserUseCase
+
+
+async def get_user_login_use_case(
+    auth_service: Annotated[AuthService, Depends(get_auth_service)],
+) -> LoginUserUseCase:
+    return LoginUserUseCase(auth_service=auth_service)
 
 
 async def get_user_register_use_case(
