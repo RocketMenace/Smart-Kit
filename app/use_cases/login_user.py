@@ -1,0 +1,12 @@
+from app.services.auth import AuthService
+from typing import Self, Any
+from app.auth.schemas import UserLoginSchema
+
+
+class LoginUserUseCase:
+
+    def __init__(self: Self, auth_service: AuthService):
+        self.auth_service = auth_service
+
+    async def login_user(self: Self, schema: UserLoginSchema) -> dict[str, Any]:
+        return await self.auth_service.login(schema=schema)

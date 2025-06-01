@@ -9,4 +9,3 @@ class UserLoginSchema(BaseModel):
 class TokenResponse(BaseModel):
     access: str
     refresh: str
-    type

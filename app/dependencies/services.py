@@ -12,6 +12,12 @@ from app.repository.user import UserRepository
 from app.services.user import UserService
 
 
+from app.services.auth import AuthService
+
+async def get_auth_service(repository: Annotated[UserRepository, Depends(get_user_repository)]) -> AuthService:
+    return AuthService(repository=repository)
+
+
 async def get_http_client() -> AsyncHTTPClient:
     return AsyncHTTPClient(base_url="http://localhost:8000")
 
