@@ -7,8 +7,9 @@ from app.schemas.history import HistoryResponseSchema, RequestInputSchema
 from app.use_cases.get_response import SaveResponseUseCase
 from app.use_cases.check_server import CheckServerUseCase
 from app.dependencies.use_cases import get_check_server_use_case
+from app.auth.dependencies import get_current_user
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(get_current_user)])
 
 
 @router.post(

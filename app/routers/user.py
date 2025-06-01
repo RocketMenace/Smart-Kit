@@ -1,5 +1,6 @@
 from fastapi import APIRouter, status, Depends
 
+from app.auth.dependencies import get_current_user
 from app.auth.schemas import UserLoginSchema
 from app.schemas.user import UserResponseSchema, UserCreateSchema
 from typing import Annotated
@@ -38,6 +39,16 @@ async def login(
 
 @router.post(path="/logout", status_code=status.HTTP_200_OK)
 async def logout(
-    use_case: Annotated[LoginUserUseCase, Depends(get_user_login_use_case)],
+    use_case: Annotated[
+        LoginUserUseCase,
+        Depends(get_user_login_use_case),
+    ],
 ):
     return await use_case.logout_user()
+
+
+@router.post(path="/refresh", status_code=status.HTTP_200_OK)
+async def refresh(
+    use_case: Annotated[LoginUserUseCase, Depends(get_user_login_use_case)],
+):
+    return await use_case.refresh_token()

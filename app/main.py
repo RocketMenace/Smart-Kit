@@ -6,10 +6,10 @@ from app.routers import history, request, user
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
-    app.state.http_client = AsyncHTTPClient(base_url="http://localhost:8000/api")
+async def lifespan(_: FastAPI):
+    _.state.http_client = AsyncHTTPClient(base_url="http://localhost:8000/api")
     yield
-    await app.state.http_client.close()
+    await _.state.http_client.close()
 
 
 app = FastAPI(root_path="/api", title="Smartkit", lifespan=lifespan)

@@ -5,8 +5,6 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel
-from typing import Self
-from sqlalchemy import UUID
 
 from app.config.database import database
 

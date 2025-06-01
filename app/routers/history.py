@@ -4,8 +4,9 @@ from typing import Annotated
 
 from app.dependencies.use_cases import get_history_use_case
 from app.use_cases.get_history import GetHistoryUseCase
+from app.auth.dependencies import get_current_user
 
-router = APIRouter(prefix="/history")
+router = APIRouter(prefix="/history", dependencies=[Depends(get_current_user)])
 
 
 @router.get(

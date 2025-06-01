@@ -13,7 +13,6 @@ class Database:
         self.engine = create_async_engine(DATABASE_URL, echo=True, future=True)
         self.Base = declarative_base()
 
-    @asynccontextmanager
     async def get_session(self):
         async_session = sessionmaker(self.engine, class_=AsyncSession)
         session = None
