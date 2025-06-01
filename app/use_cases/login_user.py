@@ -15,4 +15,3 @@ class LoginUserUseCase:
 
     async def refresh_token(self: Self, token: str) -> dict[str, str]:
         return await self.auth_service.refresh(token=token)
-
