@@ -9,3 +9,10 @@ class LoginUserUseCase:
 
     async def login_user(self: Self, schema: UserLoginSchema) -> dict[str, Any]:
         return await self.auth_service.login(schema=schema)
+
+    async def logout_user(self: Self):
+        return await self.auth_service.logout()
+
+    async def refresh_token(self: Self, token: str) -> dict[str, str]:
+        return await self.auth_service.refresh(token=token)
+

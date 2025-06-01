@@ -25,8 +25,8 @@ class AuthService:
             )
         return generate_jwt(user=user)
 
-    async def logout(self):
+    async def logout(self: Self):
         pass
 
-    async def refresh(self):
+    async def refresh(self: Self, token: str) -> dict[str, str]:
         pass
