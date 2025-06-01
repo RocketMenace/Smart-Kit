@@ -6,6 +6,6 @@ class UserLoginSchema(BaseModel):
     password: str
 
 
-class TokenResponse(BaseModel):
+class TokenResponseSchema(BaseModel):
     access: str
     refresh: str

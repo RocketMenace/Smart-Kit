@@ -2,7 +2,6 @@ from typing import Protocol, Self, Any
 from app.infrastructure.http_client import AsyncHTTPClient
 
 from app.schemas.history import RequestInputSchema
-from fastapi.responses import Response
 
 
 class RequestServiceProtocol(Protocol):

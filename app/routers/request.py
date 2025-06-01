@@ -1,7 +1,6 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, status
-from fastapi.responses import JSONResponse
 
 from app.dependencies.use_cases import get_save_response_use_case
 from app.schemas.history import HistoryResponseSchema, RequestInputSchema
