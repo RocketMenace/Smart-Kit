@@ -6,7 +6,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from app.config.settings import config
 
 DATABASE_URL = f"postgresql+asyncpg://{config.POSTGRES_USER}:{config.POSTGRES_PASSWORD}@{config.POSTGRES_SERVER}:{config.POSTGRES_PORT}/{config.POSTGRES_DB}"
-TEST_DATABASE_URL = f"postgresql+asyncpg://{config.TEST_POSTGRES_USER}:{config.TEST_POSTGRES_PASSWORD}@{config.TEST_POSTGRES_SERVER}:{config.TEST_POSTGRES_PORT}/{config.TEST_POSTGRES_DB}"
+TEST_DATABASE_URL = f"postgresql+asyncpg://{config.POSTGRES_USER}:{config.POSTGRES_PASSWORD}@{config.POSTGRES_SERVER}:{config.POSTGRES_PORT}/{config.POSTGRES_DB}"
 
 
 class Database:

@@ -33,11 +33,13 @@ class DevConfig(GlobalConfig):
 class TestConfig(GlobalConfig):
     model_config = SettingsConfigDict(env_prefix="TEST_")
     DB_FORCE_ROLL_BACK: bool = True
-    TEST_POSTGRES_USER: str
-    TEST_POSTGRES_PASSWORD: str
-    TEST_POSTGRES_SERVER: str
-    TEST_POSTGRES_PORT: str
-    TEST_POSTGRES_DB: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_SERVER: str
+    POSTGRES_PORT: str
+    POSTGRES_DB: str
+    REDIS_SERVER: str
+    REDIS_PORT: str
 
 
 @lru_cache()

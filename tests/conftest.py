@@ -34,7 +34,7 @@ async def db_session():
 
 
 @pytest.fixture()
-def client(db_session) -> Generator:
+async def client(db_session) -> AsyncGenerator:
     async with testing_async_session() as session:
 
         async def override_get_db():
@@ -51,3 +51,14 @@ async def async_client(client: TestClient) -> AsyncGenerator:
         transport=ASGITransport(app=app), base_url=client.base_url
     ) as ac:
         yield ac
+
+
+@pytest.fixture()
+async def register_user(async_client: AsyncClient):
+    payload = {
+        "email": "bob@gmail.com",
+        "first_name": "Bob",
+        "last_name": "Martin",
+        "password": "Stringst1&",
+    }
+    await async_client.post(url="/users/register", json=payload)
