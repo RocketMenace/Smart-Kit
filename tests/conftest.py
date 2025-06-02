@@ -61,4 +61,14 @@ async def register_user(async_client: AsyncClient):
         "last_name": "Martin",
         "password": "Stringst1&",
     }
-    await async_client.post(url="/users/register", json=payload)
+    response = await async_client.post(url="/users/register", json=payload)
+    return response.json()
+
+
+@pytest.fixture()
+async def login_user(async_client: AsyncClient, register_user):
+    response = await async_client.post(
+        url="/users/login",
+        json={"email": register_user.get("email"), "password": "Stringst1&"},
+    )
+    return response.json()

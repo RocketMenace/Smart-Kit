@@ -40,6 +40,10 @@ class TestConfig(GlobalConfig):
     POSTGRES_DB: str
     REDIS_SERVER: str
     REDIS_PORT: str
+    API_KEY: str
+    JWT_ALGORITHM: str = "HS256"
+    ACCESS_JWT_EXPIRED: int = 30  # minutes
+    REFRESH_JWT_EXPIRED: int = 10080  # minutes
 
 
 @lru_cache()

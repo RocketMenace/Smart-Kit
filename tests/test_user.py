@@ -65,3 +65,15 @@ async def test_password_not_in_response(async_client: AsyncClient):
     }
     response = await async_client.post(url="/users/register", json=payload)
     assert "password" not in response.json()
+
+
+@pytest.mark.anyio
+async def test_user_login(async_client: AsyncClient, register_user):
+    payload = {
+        "email": "bob@gmail.com",
+        "password": "Stringst1&",
+    }
+    response = await async_client.post(url="/users/login", json=payload)
+    assert response.status_code == status.HTTP_200_OK
+    assert "access" in response.json()
+    assert "refresh" in response.json()
