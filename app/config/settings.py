@@ -22,6 +22,8 @@ class DevConfig(GlobalConfig):
     POSTGRES_SERVER: str
     POSTGRES_PORT: str
     POSTGRES_DB: str
+    REDIS_SERVER: str
+    REDIS_PORT: str
     API_KEY: str
     JWT_ALGORITHM: str = "HS256"
     ACCESS_JWT_EXPIRED: int = 30  # minutes

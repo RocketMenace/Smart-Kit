@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
 from sqladmin import Admin
 from app.config.database import database
+from app.infrastructure.redis import redis_client
 
-from app.infrastructure.http_client import AsyncHTTPClient
 from app.routers import history, request, user
 from app.admin.user import UserAdmin
 from app.admin.history import HistoryAdmin
@@ -11,9 +11,9 @@ from app.admin.history import HistoryAdmin
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    _.state.http_client = AsyncHTTPClient(base_url="http://localhost:8000/api")
+    await redis_client.connect()
     yield
-    await _.state.http_client.close()
+    await redis_client.close()
 
 
 app = FastAPI(root_path="/api", title="Smartkit", lifespan=lifespan)
