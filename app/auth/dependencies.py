@@ -10,7 +10,7 @@ from jwt.exceptions import InvalidTokenError
 from app.auth.exceptions import NotAuthenticated
 from app.repository.user import UserRepository
 from app.dependencies.repository import get_user_repository
-from fastapi import Request
+from fastapi import Request, status
 
 
 class JWTBearer(HTTPBearer):
@@ -22,17 +22,24 @@ class JWTBearer(HTTPBearer):
             JWTBearer, self
         ).__call__(request)
         if credentials:
+            token_data = decode_jwt(credentials.credentials)
             if not credentials.scheme == "Bearer":
                 raise HTTPException(
-                    status_code=403, detail="Invalid authentication scheme."
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Invalid authentication scheme.",
                 )
             if not self.verify_jwt(credentials.credentials):
                 raise HTTPException(
-                    status_code=403, detail="Invalid token or expired token."
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Invalid token or expired token.",
                 )
+            self.verify_token_data(token_data=token_data)
             return credentials.credentials
         else:
-            raise HTTPException(status_code=403, detail="Invalid authorization code.")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Invalid authorization code.",
+            )
 
     def verify_jwt(self, token: str) -> bool:
         is_token_valid: bool = False
@@ -46,9 +53,28 @@ class JWTBearer(HTTPBearer):
 
         return is_token_valid
 
+    def verify_token_data(self, token_data: dict) -> None:
+        raise NotImplementedError()
+
+
+class AccessToken(JWTBearer):
+    def verify_token_data(self, token_data: dict) -> None:
+        if token_data and token_data.get("type") == "refresh":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token type."
+            )
+
+
+class RefreshToken(JWTBearer):
+    def verify_token_data(self, token_data: dict) -> None:
+        if token_data and token_data.get("type") == "access":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token type."
+            )
+
 
 async def get_current_user(
-    token: Annotated[str, Depends(JWTBearer())],
+    token: Annotated[str, Depends(AccessToken())],
     repository: Annotated[UserRepository, Depends(get_user_repository)],
 ):
     try:
@@ -59,3 +85,5 @@ async def get_current_user(
     except InvalidTokenError:
         raise NotAuthenticated()
     return await repository.get_by_uuid(uuid=user_id)
+
+

@@ -38,7 +38,11 @@ class AuthService:
     async def refresh(self: Self, token: str) -> dict[str, str]:
         try:
             payload = decode_jwt(token)
-            user: User = await self.repository.get_by_uuid(uuid=payload.get("user_id"))
+            user: User = await self.repository.get_by_uuid(uuid=payload.get("sub"))
+            if not user:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid token"
+                )
             return generate_jwt(user=user)
         except InvalidTokenError:
             raise HTTPException(

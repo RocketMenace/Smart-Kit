@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends
 
-from app.auth.dependencies import get_current_user
+from app.auth.dependencies import get_current_user, RefreshToken
 from app.auth.schemas import UserLoginSchema
 from app.schemas.user import UserResponseSchema, UserCreateSchema
 from typing import Annotated
@@ -77,16 +77,10 @@ async def logout(
     ],
     token: Annotated[str, Depends(get_current_user)],
 ):
-    """
-    Logs out the current user by blacklisting their JWT token.
-
-    - **token**: The JWT access token to invalidate
-    - **returns**: Success message
-    """
     return await use_case.logout_user(token=token)
 
 
-@router.post(
+@router.get(
     path="/refresh",
     status_code=status.HTTP_200_OK,
     response_model=TokenResponseSchema,
@@ -114,6 +108,6 @@ async def logout(
 )
 async def refresh(
     use_case: Annotated[LoginUserUseCase, Depends(get_user_login_use_case)],
-    token: Annotated[str, Depends(get_current_user)],
+    token: Annotated[str, Depends(RefreshToken())],
 ):
     return await use_case.refresh_token(token=token)
