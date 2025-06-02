@@ -43,12 +43,14 @@ async def logout(
         LoginUserUseCase,
         Depends(get_user_login_use_case),
     ],
+    token: Annotated[str, Depends(get_current_user)],
 ):
-    return await use_case.logout_user()
+    return await use_case.logout_user(token=token)
 
 
 @router.post(path="/refresh", status_code=status.HTTP_200_OK)
 async def refresh(
     use_case: Annotated[LoginUserUseCase, Depends(get_user_login_use_case)],
+    token: Annotated[str, Depends(get_current_user)],
 ):
-    return await use_case.refresh_token()
+    return await use_case.refresh_token(token=token)

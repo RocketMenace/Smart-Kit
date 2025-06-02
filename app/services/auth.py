@@ -1,11 +1,15 @@
 from typing import Self
+
+from jwt import InvalidTokenError
+
 from app.repository.user import UserRepository
 from app.auth.schemas import UserLoginSchema
 from fastapi.exceptions import HTTPException
 from fastapi import status
 from app.auth.security import verify_password
 from app.models.user import User
-from app.auth.jwt import generate_jwt
+from app.auth.jwt import generate_jwt, decode_jwt
+from fastapi.responses import JSONResponse
 
 
 class AuthService:
@@ -26,7 +30,17 @@ class AuthService:
         return generate_jwt(user=user)
 
     async def logout(self: Self):
-        pass
+        return JSONResponse(
+            content={"message": "Successfully logged out"},
+            status_code=status.HTTP_200_OK,
+        )
 
     async def refresh(self: Self, token: str) -> dict[str, str]:
-        pass
+        try:
+            payload = decode_jwt(token)
+            user: User = await self.repository.get_by_uuid(uuid=payload.get("user_id"))
+            return generate_jwt(user=user)
+        except InvalidTokenError:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid token."
+            )

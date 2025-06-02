@@ -4,6 +4,7 @@ from fastapi import Depends
 
 from app.dependencies.repository import get_history_repository, get_user_repository
 from app.infrastructure.http_client import AsyncHTTPClient
+from app.infrastructure.redis import RedisClient, redis_client
 from app.repository.history import HistoryRepository
 from app.services.base import BaseServiceProtocol
 from app.services.history import HistoryService
@@ -13,6 +14,10 @@ from app.services.user import UserService
 
 
 from app.services.auth import AuthService
+
+
+def get_redis_client() -> RedisClient:
+    return redis_client
 
 
 async def get_auth_service(

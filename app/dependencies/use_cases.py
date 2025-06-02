@@ -2,6 +2,7 @@ from typing import Annotated
 
 from fastapi import Depends
 
+from app.infrastructure.redis import RedisClient
 from app.services.history import HistoryService
 from app.services.request import RequestService
 from app.use_cases.get_response import SaveResponseUseCase
@@ -12,6 +13,7 @@ from app.dependencies.services import (
     get_auth_service,
     get_history_service,
     get_request_service,
+    get_redis_client,
 )
 from app.use_cases.get_history import GetHistoryUseCase
 from app.use_cases.check_server import CheckServerUseCase
@@ -21,8 +23,9 @@ from app.use_cases.login_user import LoginUserUseCase
 
 async def get_user_login_use_case(
     auth_service: Annotated[AuthService, Depends(get_auth_service)],
+    cache: Annotated[RedisClient, Depends(get_redis_client)],
 ) -> LoginUserUseCase:
-    return LoginUserUseCase(auth_service=auth_service)
+    return LoginUserUseCase(auth_service=auth_service, cache=cache)
 
 
 async def get_user_register_use_case(

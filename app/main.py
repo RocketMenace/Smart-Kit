@@ -25,4 +25,3 @@ app.include_router(user.router)
 
 admin.add_view(UserAdmin)
 admin.add_view(HistoryAdmin)
-

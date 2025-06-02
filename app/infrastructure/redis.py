@@ -9,6 +9,7 @@ class RedisClient:
     Attributes:
         redis (redis.asyncio.Redis): Redis connection instance.
     """
+
     def __init__(self):
         self.redis = None
 
@@ -18,7 +19,7 @@ class RedisClient:
             host=config.REDIS_SERVER,
             port=config.REDIS_PORT,
             decode_responses=True,
-            db=1
+            db=1,
         )
 
     async def close(self):
