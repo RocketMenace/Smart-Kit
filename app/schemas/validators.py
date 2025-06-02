@@ -19,4 +19,5 @@ def validate_password(value: str) -> str:
         )
     return value
 
+
 Password = Annotated[str, AfterValidator(validate_password)]
