@@ -12,5 +12,7 @@ class UserService(BaseService):
         super().__init__(repository=repository)
 
     async def create(self: Self, schema: UserCreateSchema) -> User:
+        schema.first_name = schema.first_name.title()
+        schema.last_name = schema.last_name.title()
         schema.password = hash_password(schema.password)
         return await self.repository.add_one(schema=schema)

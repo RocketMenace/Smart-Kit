@@ -19,6 +19,7 @@ router = APIRouter(prefix="/users", tags=["Users"])
     path="/register",
     status_code=status.HTTP_201_CREATED,
     response_model=UserResponseSchema,
+    description="Register user with specified credentials.",
 )
 async def register(
     request: UserCreateSchema,
@@ -37,7 +38,16 @@ async def login(
     return await use_case.login_user(schema=request)
 
 
-@router.post(path="/logout", status_code=status.HTTP_200_OK)
+@router.post(
+    path="/logout",
+    status_code=status.HTTP_200_OK,
+    summary="User logout",
+    description="Invalidates the current access token by adding it to the blacklist",
+    responses={
+        status.HTTP_200_OK: {"description": "Successfully logged out"},
+        status.HTTP_401_UNAUTHORIZED: {"description": "Invalid or expired token"},
+    },
+)
 async def logout(
     use_case: Annotated[
         LoginUserUseCase,
@@ -45,6 +55,12 @@ async def logout(
     ],
     token: Annotated[str, Depends(get_current_user)],
 ):
+    """
+    Logs out the current user by blacklisting their JWT token.
+
+    - **token**: The JWT access token to invalidate
+    - **returns**: Success message
+    """
     return await use_case.logout_user(token=token)
 
 
