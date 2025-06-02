@@ -29,7 +29,29 @@ async def register(
 
 
 @router.post(
-    path="/login", status_code=status.HTTP_200_OK, response_model=TokenResponseSchema
+    path="/login",
+    status_code=status.HTTP_200_OK,
+    response_model=TokenResponseSchema,
+    summary="Authenticate user and get access token",
+    description="Authenticates user credentials and returns JWT tokens for authorization.",
+    responses={
+        status.HTTP_400_BAD_REQUEST: {
+            "description": "Invalid request data",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Invalid email or password format"}
+                }
+            },
+        },
+        status.HTTP_401_UNAUTHORIZED: {
+            "description": "Unauthorized - Invalid credentials",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Incorrect email or password"}
+                }
+            },
+        },
+    },
 )
 async def login(
     request: UserLoginSchema,
@@ -64,7 +86,32 @@ async def logout(
     return await use_case.logout_user(token=token)
 
 
-@router.post(path="/refresh", status_code=status.HTTP_200_OK)
+@router.post(
+    path="/refresh",
+    status_code=status.HTTP_200_OK,
+    response_model=TokenResponseSchema,
+    summary="Refresh access token",
+    description="Generates a new access token using a valid refresh token.",
+    responses={
+        status.HTTP_401_UNAUTHORIZED: {
+            "description": "Unauthorized - Invalid or expired refresh token",
+            "content": {
+                "application/json": {
+                    "examples": {
+                        "invalid_token": {"value": {"detail": "Invalid refresh token"}},
+                        "expired_token": {"value": {"detail": "Token has expired"}},
+                    }
+                }
+            },
+        },
+        status.HTTP_403_FORBIDDEN: {
+            "description": "Forbidden - Token is not a refresh token",
+            "content": {
+                "application/json": {"example": {"detail": "Not a refresh token"}}
+            },
+        },
+    },
+)
 async def refresh(
     use_case: Annotated[LoginUserUseCase, Depends(get_user_login_use_case)],
     token: Annotated[str, Depends(get_current_user)],
