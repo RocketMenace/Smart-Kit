@@ -32,7 +32,7 @@ class BaseRepository(BaseRepositoryProtocol):
                 return entity
             except IntegrityError as error:
                 raise HTTPException(
-                    status_code=status.HTTP_409_CONFLICT, detail=str(error)
+                    status_code=status.HTTP_409_CONFLICT, detail="Object already exists"
                 )
 
     async def get_all(self: Self) -> Sequence[DBModel]:
