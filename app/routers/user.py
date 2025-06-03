@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends
 
-from app.auth.dependencies import get_current_user, RefreshToken
+from app.auth.dependencies import get_current_user, RefreshToken, AccessToken
 from app.auth.schemas import UserLoginSchema
 from app.schemas.user import UserResponseSchema, UserCreateSchema
 from typing import Annotated
@@ -64,7 +64,7 @@ async def login(
     path="/logout",
     status_code=status.HTTP_200_OK,
     summary="User logout",
-    description="Invalidates the current access token by adding it to the blacklist",
+    description="Invalidates the current access and refresh token by adding it to the blacklist",
     responses={
         status.HTTP_200_OK: {"description": "Successfully logged out"},
         status.HTTP_401_UNAUTHORIZED: {"description": "Invalid or expired token"},
@@ -75,9 +75,9 @@ async def logout(
         LoginUserUseCase,
         Depends(get_user_login_use_case),
     ],
-    token: Annotated[str, Depends(get_current_user)],
+    refresh_token: Annotated[str, Depends(RefreshToken())]
 ):
-    return await use_case.logout_user(token=token)
+    return await use_case.logout_user(refresh_token=refresh_token)
 
 
 @router.get(

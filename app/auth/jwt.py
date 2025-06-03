@@ -11,7 +11,6 @@ def create_access_token(
     access_expiration = datetime.now(tz=timezone.utc) + timedelta(
         minutes=config.ACCESS_JWT_EXPIRED
     )
-    print(user, "^^^^^^^^^^^^^^")
     access_jwt_data = {"sub": str(user.id), "exp": access_expiration, "type": "access"}
     return jwt.encode(access_jwt_data, config.API_KEY, algorithm=config.JWT_ALGORITHM)
 

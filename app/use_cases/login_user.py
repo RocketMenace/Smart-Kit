@@ -17,13 +17,14 @@ class LoginUserUseCase:
     async def login_user(self: Self, schema: UserLoginSchema) -> dict[str, Any]:
         return await self.auth_service.login(schema=schema)
 
-    async def logout_user(self: Self, token: str):
+    async def logout_user(self: Self, refresh_token: str):
         try:
-            payload = decode_jwt(token)
-            ttl = datetime.fromtimestamp(payload.get("exp")) - datetime.now(
+            refresh_payload = decode_jwt(refresh_token)
+
+            refresh_token_ttl = datetime.fromtimestamp(refresh_payload.get("exp"), tz=timezone.utc) - datetime.now(
                 tz=timezone.utc
             )
-            await self.cache.set(key=token, value="Blacklisted", ttl=ttl)
+            await self.cache.set(key=refresh_token, value="Blacklisted", ttl=refresh_token_ttl)
             return await self.auth_service.logout()
         except InvalidTokenError:
             raise HTTPException(
