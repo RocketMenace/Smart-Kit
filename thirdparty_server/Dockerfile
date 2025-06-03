@@ -13,4 +13,6 @@ RUN pip install poetry
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-root --no-interaction --no-ansi
 
-COPY . .
+COPY . ./thirdparty_server
+
+CMD ["uvicorn", "thirdparty_server.main:app", "--host", "0.0.0.0", "--port", "8000"]

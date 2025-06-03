@@ -1,5 +1,5 @@
 from typing import Self
-from app.schemas.history import RequestInputSchema
+from thirdparty_server.schemas import RequestInputSchema
 from thirdparty_server.services import ThirdPartyService
 
 

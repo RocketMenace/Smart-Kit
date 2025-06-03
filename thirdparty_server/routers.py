@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends
 
-from app.schemas.history import RequestInputSchema
+from thirdparty_server.schemas import RequestInputSchema
 
 from typing import Annotated
 from fastapi.responses import JSONResponse
