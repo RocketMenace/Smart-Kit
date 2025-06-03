@@ -74,4 +74,5 @@ TEST_API_KEY=
 | `/users/login`      | POST   | User login                         |
 | `/users/logout`     | POST   | User logout                        |
 | `/users/refresh`    | POST   | Refresh JWT tokens                 |
+| `/api/admin`        |        | Amin panel                         |     
 
